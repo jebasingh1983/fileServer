@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deduct Right File Server</title>
+    <link rel="stylesheet" href="lib\bootstrap\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="lib\ng-table\bundles\ng-table.min.css">
+    <link rel="shortcut icon" href="images\favicon.ico">
+    <style>
+        .starter-template {
+            padding: 10px 15px;
+        }
+
+        body {
+            padding-top: 50px;
+        }   
+    </style>
+</head>
+<body ng-app="app">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Deduct Right</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container" ng-controller="homeController">
+        <div class="starter-template">
+            <h3 style="border-bottom: 1px solid #eee;padding-bottom: 9px;">Uploaded Files</h3>
+            <button type="button" class="btn btn-primary pull-right" reload-click="reloadGrid()"  data-loading-text="Loading..." style="margin-bottom: 10px;">Reload</button>
+            <table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
+                <tr ng-repeat="row in $data">
+                    <td data-title="'File Id'" filter="{fileId: 'number'}">{{row.fileId}}</td>
+                    <td data-title="'Reference Number'" filter="{referenceNumber: 'text'}">{{row.referenceNumber}}</td>
+                    <td data-title="'Type'" filter="{ type: 'select'}" filter-data="types">{{row.type}}</td>
+                    <td data-title="'Date'" filter="{ date: 'text'}">{{row.date}}</td>
+                    <td data-title="'File Name'" filter="{ fileName: 'text'}">{{row.fileName}}</td>
+                    <td data-title="'Download'" align="center">
+                       <i class="glyphicon glyphicon glyphicon-download-alt" style="cursor: pointer" ng-click="download(row)"></i>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <embed ng-src="{{content}}" style="width:200px;height:200px;"></embed>
+    <!--library-->
+    <script src="lib\jquery\dist\jquery.min.js"></script>
+    <script src="lib\bootstrap\dist\js\bootstrap.min.js"></script>
+    <script src="lib\angular\angular.min.js"></script>
+    <script src="lib\ng-table\bundles\ng-table.min.js"></script>
+    <!--application code-->
+    <script src="js\app.js"></script>
+    <script src="js\fileService.js"></script>
+    <script src="js\fileDirectives.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "deduct_right_file_server",
+  "description": "DeductRight File Server",
+  "main": "server.js",
+  "authors": [
+    "Jeba"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "ng-table": "^4.0.0",
+    "angular": "^1.6.4"
+  }
+}
