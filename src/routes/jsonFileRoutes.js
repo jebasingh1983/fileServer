@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require("multer");
 var fs = require('fs');
+var path = require('path');
 var File = require("../models/file").File;
 var validate = require("../helper/inputParam").validate;
 var getFileType = require("../helper/helper").getFileType;
@@ -11,7 +12,7 @@ var jsonFileRouter = express.Router();
 jsonFileRouter.route("/api/FileNetDMSDoc/AddDocByStreamAsync")
     .post(function (req, res) {
         var DocumentInfo = req.body.DocumentInfo;
-        var errorMessages = validate(DocumentInfo);
+        var errorMessages = validate(req);
         if (errorMessages.length == 0) {
             var file = new File();
             file.orginalFileName = DocumentInfo.FileName;
@@ -67,6 +68,33 @@ jsonFileRouter.route('/:fileId')
         }
     });
 
+jsonFileRouter.route("/api/FileNetDMSDoc/GetDocument")
+    .post(function (req, res) {
+        if (req.body.FileNetDocumentID) {
+            File.find({
+                uniqueId: req.body.FileNetDocumentID
+            }, function (err, docs) {
+                var fileName = docs[0].fileName;
+                if (docs) {
+                    var buffer = fs.readFileSync("./uploads/" + fileName, {
+                        encoding: 'base64'
+                    });
+                    var fileNameSplit = fileName.split('.');
+                    if (fileNameSplit.length > 0) {
+                        extension = fileNameSplit.pop();
+                        res.json({
+                            Content: buffer,
+                            DocumentExtension: extension,
+                            DocumentName: fileName,
+                            MimeType: "",
+                        });
+                    }
+                } else {
+                    res.json("Record Not Found");
+                }
+            });
+        }
+    });
 
 jsonFileRouter.route("/")
     .post(function (req, res) {
