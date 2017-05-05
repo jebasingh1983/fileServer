@@ -2,7 +2,7 @@ var getReferenceNumber = require("./helper").getReferenceNumber;
 var fileTypes = ["INVC", "COLN", "DLNQ"]
 
 module.exports.validate = function (req) {
-    var documentInfo = req.body.Content;
+    var documentInfo = req.body.DocumentInfo;
     errorMessages = [];
     if (typeof documentInfo.DocTypeCode == 'undefined') {
         errorMessages.push("Parameter DocTypeCode NotFound")
