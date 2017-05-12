@@ -53,16 +53,36 @@ jsonFileRouter.route("/api/FileNetDMSDoc/AddDocByStreamAsync")
     });
 
 
-jsonFileRouter.route('/:fileId')
-    .get(function (req, res) {
-        if (req.params.fileId) {
+jsonFileRouter.route("/api/FileNetDMSDoc/GuidByFileNetID")
+    .post(function (req, res) {
+        if (req.body.FilenetID) {
             File.find({
-                fileId: req.params.fileId
+                fileId: req.body.FilenetID
             }, function (err, docs) {
                 if (docs) {
-                    res.json(docs[0].uniqueId);
+                    res.send({
+                        Message: docs[0].fileId,
+                        FileNetGUIDDocID: docs[0].uniqueId,
+                        Success: true,
+                    });
                 } else {
-                    res.json("Record Not Found");
+                    res.send({
+                        Message: "Record Not Found",
+                        FileNetGUIDDocID: "",
+                        Success: true,
+                        ResponseError: getDefaultErrorMessage( "Record Not Found")
+                    });
+                }
+            });
+        } else {
+            res.send({
+                Message: "Parameter Not Found",
+                FileNetGUIDDocID: "",
+                Success: true,
+                ResponseError: {
+                    Code: "",
+                    Description: "Parameter Not Found",
+                    Summary: ""
                 }
             });
         }
@@ -90,7 +110,14 @@ jsonFileRouter.route("/api/FileNetDMSDoc/GetDocument")
                         });
                     }
                 } else {
-                    res.json("Record Not Found");
+                    res.json({
+                        Content: "",
+                        DocumentExtension: "",
+                        DocumentName: "",
+                        MimeType: "",
+                        ResponseError: getDefaultErrorMessage( "Record Not Found")
+                        }
+                    );
                 }
             });
         }

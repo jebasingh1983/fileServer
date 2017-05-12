@@ -15,7 +15,7 @@ module.exports.getFileType = function (typeCode) {
 }
 
 module.exports.getReferenceNumber = function (documentInfo) {
-   var referenceNumber = "";
+    var referenceNumber = "";
     switch (documentInfo.DocTypeCode) {
         case "DLNQ":
             {
@@ -34,4 +34,12 @@ module.exports.getReferenceNumber = function (documentInfo) {
             }
     }
     return referenceNumber;
+}
+
+module.exports.getDefaultErrorMessage = function (description) {
+    return {
+        Code: "",
+        Description: description,
+        Summary: ""
+    }
 }
